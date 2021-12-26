@@ -7,7 +7,6 @@ import com.ali.springboot.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -40,5 +39,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Employee", "ID", id)
         );
+    }
+
+    @Override
+    public Employee updateEmployee(Employee employee, long id) {
+        // We need check whether employee with given id is exists in Db or not
+        Employee existingEmployee = employeeRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Employee", "ID", id)
+        );
+
+        // Update existing employee
+        existingEmployee.setFirstName(employee.getFirstName());
+        existingEmployee.setLastName(employee.getLastName());
+        existingEmployee.setEmail(employee.getEmail());
+
+        // save existing employee to DB
+        return employeeRepository.save(existingEmployee);
     }
 }

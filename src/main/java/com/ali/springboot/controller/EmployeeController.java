@@ -21,7 +21,7 @@ public class EmployeeController {
     // Build Create Employee Rest API
     @PostMapping()
     public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee) {
-        return new ResponseEntity<Employee>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
+        return new ResponseEntity<>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
     }
 
     // Build Get All Employees Rest API
@@ -35,5 +35,12 @@ public class EmployeeController {
     @GetMapping("{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") long employeeId) {
         return new ResponseEntity<>(employeeService.getEmployeeById(employeeId), HttpStatus.OK);
+    }
+
+    // Build Update Employee Rest API
+    // http://localhost:8080/api/employees/2
+    @PutMapping("{id}")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable("id") long employeeId) {
+        return new ResponseEntity<>(employeeService.updateEmployee(employee, employeeId), HttpStatus.OK);
     }
 }
